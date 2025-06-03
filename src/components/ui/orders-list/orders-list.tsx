@@ -2,13 +2,13 @@ import { FC } from 'react';
 
 import styles from './orders-list.module.css';
 
-import { OrdersListUIProps } from './type';
-import { OrderCard } from '@components';
+import { OrdListUIProps } from './type';
+import { OrdersCard } from '@components';
 
-export const OrdersListUI: FC<OrdersListUIProps> = ({ orderByDate }) => (
+export const OrdListUI: FC<OrdListUIProps> = ({ orderByDate }) => (
   <div className={`${styles.content}`}>
     {orderByDate.map((order) => (
-      <OrderCard order={order} key={order._id} />
+      <OrdersCard order={order} key={order._id} />
     ))}
   </div>
 );

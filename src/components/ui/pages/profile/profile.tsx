@@ -5,7 +5,7 @@ import styles from './profile.module.css';
 import commonStyles from '../common.module.css';
 
 import { ProfileUIProps } from './type';
-import { ProfileMenu } from '@components';
+import { ProfileM } from '@components';
 
 export const ProfileUI: FC<ProfileUIProps> = ({
   formValue,
@@ -17,7 +17,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
 }) => (
   <main className={`${commonStyles.container}`}>
     <div className={`mt-30 mr-15 ${styles.menu}`}>
-      <ProfileMenu />
+      <ProfileM />
     </div>
     <form
       className={`mt-30 ${styles.form} ${commonStyles.form}`}
@@ -35,6 +35,8 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            onPointerEnterCapture={() => {}}
+            onPointerLeaveCapture={() => {}}
           />
         </div>
         <div className='pb-6'>
@@ -48,6 +50,8 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            onPointerEnterCapture={() => {}}
+            onPointerLeaveCapture={() => {}}
           />
         </div>
         <div className='pb-6'>
@@ -60,6 +64,8 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             error={false}
             errorText={''}
             size={'default'}
+            onPointerEnterCapture={() => {}}
+            onPointerLeaveCapture={() => {}}
             icon={'EditIcon'}
           />
         </div>

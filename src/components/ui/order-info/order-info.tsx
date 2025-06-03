@@ -6,18 +6,18 @@ import {
 
 import styles from './order-info.module.css';
 
-import { OrderInfoUIProps } from './type';
-import { OrderStatus } from '@components';
+import { OrdersInfoUIProps } from './type';
+import { OrdersStat } from '@components';
 
-export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
+export const OrdersInfoUI: FC<OrdersInfoUIProps> = memo(({ OrdersInfo }) => (
   <div className={styles.wrap}>
     <h3 className={`text text_type_main-medium  pb-3 pt-10 ${styles.header}`}>
-      {orderInfo.name}
+      {OrdersInfo.name}
     </h3>
-    <OrderStatus status={orderInfo.status} />
+    <OrdersStat status={OrdersInfo.status} />
     <p className={`text text_type_main-medium pt-15 pb=6`}>Состав:</p>
     <ul className={`${styles.list} mb-8`}>
-      {Object.values(orderInfo.ingredientsInfo).map((item, index) => (
+      {Object.values(OrdersInfo.ingredientsInfo).map((item, index) => (
         <li className={`pb-4 pr-6 ${styles.item}`} key={index}>
           <div className={styles.img_wrap}>
             <div className={styles.border}>
@@ -40,10 +40,10 @@ export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
     </ul>
     <div className={styles.bottom}>
       <p className='text text_type_main-default text_color_inactive'>
-        <FormattedDate date={orderInfo.date} />
+        <FormattedDate date={OrdersInfo.date} />
       </p>
       <span className={`text text_type_digits-default pr-4 ${styles.total}`}>
-        {orderInfo.total}
+        {OrdersInfo.total}
       </span>
       <CurrencyIcon type={'primary'} />
     </div>

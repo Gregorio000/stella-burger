@@ -2,8 +2,8 @@ import { useSelector } from '../../services/store';
 
 import styles from './constructor-page.module.css';
 
-import { BurgerIngredients } from '../../components';
-import { BurgerConstructor } from '../../components';
+import { BurgerIng } from '../../components';
+import { BurgerConstr } from '../../components';
 import { Preloader } from '../../components/ui';
 import { FC } from 'react';
 
@@ -23,8 +23,8 @@ export const ConstructorPage: FC = () => {
             Соберите бургер
           </h1>
           <div className={`${styles.main} pl-5 pr-5`}>
-            <BurgerIngredients />
-            <BurgerConstructor />
+            <BurgerIng />
+            <BurgerConstr />
           </div>
         </main>
       )}

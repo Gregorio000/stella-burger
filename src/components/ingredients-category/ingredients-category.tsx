@@ -1,14 +1,14 @@
 import { forwardRef, useMemo } from 'react';
-import { TIngredientsCategoryProps } from './type';
+import { TIngrCategProps } from './type';
 import { TIngredient } from '@utils-types';
-import { IngredientsCategoryUI } from '../ui/ingredients-category';
+import { IngrCategUI } from '../ui/ingredients-category';
 
-export const IngredientsCategory = forwardRef<
+export const IngrCateg = forwardRef<
   HTMLUListElement,
-  TIngredientsCategoryProps
+  TIngrCategProps
 >(({ title, titleRef, ingredients }, ref) => {
   /** TODO: взять переменную из стора */
-  const burgerConstructor = {
+  const BurgerConstr = {
     bun: {
       _id: ''
     },
@@ -16,7 +16,7 @@ export const IngredientsCategory = forwardRef<
   };
 
   const ingredientsCounters = useMemo(() => {
-    const { bun, ingredients } = burgerConstructor;
+    const { bun, ingredients } = BurgerConstr;
     const counters: { [key: string]: number } = {};
     ingredients.forEach((ingredient: TIngredient) => {
       if (!counters[ingredient._id]) counters[ingredient._id] = 0;
@@ -24,10 +24,10 @@ export const IngredientsCategory = forwardRef<
     });
     if (bun) counters[bun._id] = 2;
     return counters;
-  }, [burgerConstructor]);
+  }, [BurgerConstr]);
 
   return (
-    <IngredientsCategoryUI
+    <IngrCategUI
       title={title}
       titleRef={titleRef}
       ingredients={ingredients}

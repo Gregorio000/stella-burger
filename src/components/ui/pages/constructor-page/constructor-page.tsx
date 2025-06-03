@@ -4,7 +4,7 @@ import styles from './constructor-page.module.css';
 
 import { ConstructorPageUIProps } from './type';
 import { Preloader } from '@ui';
-import { BurgerIngredients, BurgerConstructor } from '@components';
+import { BurgerIng, BurgerConstr } from '@components';
 
 export const ConstructorPageUI: FC<ConstructorPageUIProps> = ({
   isIngredientsLoading
@@ -20,8 +20,8 @@ export const ConstructorPageUI: FC<ConstructorPageUIProps> = ({
           Соберите бургер
         </h1>
         <div className={`${styles.main} pl-5 pr-5`}>
-          <BurgerIngredients />
-          <BurgerConstructor />
+          <BurgerIng />
+          <BurgerConstr />
         </div>
       </main>
     )}

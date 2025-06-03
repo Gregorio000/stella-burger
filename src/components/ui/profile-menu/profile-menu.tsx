@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import styles from './profile-menu.module.css';
 import { NavLink } from 'react-router-dom';
-import { ProfileMenuUIProps } from './type';
+import { ProfileMUIProps } from './type';
 
-export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({
+export const ProfileMUI: FC<ProfileMUIProps> = ({
   pathname,
   handleLogout
 }) => (

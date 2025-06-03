@@ -2,9 +2,9 @@ import React, { FC, memo } from 'react';
 
 import styles from './feed-info.module.css';
 
-import { FeedInfoUIProps, HalfColumnProps, TColumnProps } from './type';
+import { FeedInformationsUIProps, HalfColumnProps, TColumnProps } from './type';
 
-export const FeedInfoUI: FC<FeedInfoUIProps> = memo(
+export const FeedInformationsUI: FC<FeedInformationsUIProps> = memo(
   ({ feed, readyOrders, pendingOrders }) => {
     const { total, totalToday } = feed;
 

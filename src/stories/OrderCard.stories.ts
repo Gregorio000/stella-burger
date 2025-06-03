@@ -1,23 +1,23 @@
-import { OrderCardUI } from '@ui';
+import { OrdersCardUI } from '@ui';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'Example/OrderCard',
-  component: OrderCardUI,
+  title: 'Example/OrdersCard',
+  component: OrdersCardUI,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen'
   }
-} satisfies Meta<typeof OrderCardUI>;
+} satisfies Meta<typeof OrdersCardUI>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const DefaultOrderCard: Story = {
+export const DefaultOrdersCard: Story = {
   args: {
-    orderInfo: {
+    OrdersInfo: {
       ingredientsInfo: [
         {
           _id: '111',

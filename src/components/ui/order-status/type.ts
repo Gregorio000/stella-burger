@@ -1,4 +1,4 @@
-export type OrderStatusUIProps = {
+export type OrdersStatUIProps = {
   textStyle: string;
   text: string;
 };
