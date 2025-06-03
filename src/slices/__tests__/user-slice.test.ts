@@ -37,9 +37,7 @@ jest.mock('../../utils/cookie', () => ({
 const mockRegUserApi = registerUserApi as jest.MockedFunction<
   typeof registerUserApi
 >;
-const mockLogUserApi = loginUserApi as jest.MockedFunction<
-  typeof loginUserApi
->;
+const mockLogUserApi = loginUserApi as jest.MockedFunction<typeof loginUserApi>;
 const mockLogoutApi = logoutApi as jest.MockedFunction<typeof logoutApi>;
 const mockGetUserApi = getUserApi as jest.MockedFunction<typeof getUserApi>;
 const mockUpdUserApi = updateUserApi as jest.MockedFunction<
@@ -178,10 +176,7 @@ describe('Слайс пользователя', () => {
         );
 
         const state = store.getState().user;
-        expect(mockSetCook).toHaveBeenCalledWith(
-          'accessToken',
-          'access-token'
-        );
+        expect(mockSetCook).toHaveBeenCalledWith('accessToken', 'access-token');
         expect(state.isAuthenticated).toBe(true);
         expect(state.data).toEqual(mockUser);
       });

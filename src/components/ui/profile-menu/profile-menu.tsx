@@ -3,10 +3,7 @@ import styles from './profile-menu.module.css';
 import { NavLink } from 'react-router-dom';
 import { ProfileMUIProps } from './type';
 
-export const ProfileMUI: FC<ProfileMUIProps> = ({
-  pathname,
-  handleLogout
-}) => (
+export const ProfileMUI: FC<ProfileMUIProps> = ({ pathname, handleLogout }) => (
   <>
     <NavLink
       to={'/profile'}

@@ -25,7 +25,7 @@ describe('Авторизация и профиль', () => {
       body: {
         success: true,
         user: {
-          email: 'test_user_9876543210@test.com',
+          email: 'test_user@example.com',
           name: SELECTORS.testUserName,
         }
       }

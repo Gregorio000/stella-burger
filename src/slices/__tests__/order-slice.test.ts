@@ -27,9 +27,7 @@ const mockOrdBurgApi = orderBurgerApi as jest.MockedFunction<
 const mockGetOrdByNumberApi = getOrderByNumberApi as jest.MockedFunction<
   typeof getOrderByNumberApi
 >;
-const mockGetOrdApi = getOrdersApi as jest.MockedFunction<
-  typeof getOrdersApi
->;
+const mockGetOrdApi = getOrdersApi as jest.MockedFunction<typeof getOrdersApi>;
 
 describe('Слайс заказов', () => {
   const mockOrder: TOrder = {

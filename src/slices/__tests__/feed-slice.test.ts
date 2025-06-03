@@ -15,9 +15,7 @@ jest.mock('@api', () => ({
   getFeedsApi: jest.fn()
 }));
 
-const mockGetFeedsApi = getFeedsApi as jest.MockedFunction<
-  typeof getFeedsApi
->;
+const mockGetFeedsApi = getFeedsApi as jest.MockedFunction<typeof getFeedsApi>;
 
 describe('Слайс feed', () => {
   const mockOrder: TOrder = {
