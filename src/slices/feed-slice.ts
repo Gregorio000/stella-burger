@@ -8,6 +8,7 @@ import {
 } from '@reduxjs/toolkit';
 import { RootState } from '../services/store';
 
+// Тип состояния фида
 export interface FeedState {
   items: TOrdersData | null;
   loading: boolean;
@@ -20,11 +21,19 @@ export const initialState: FeedState = {
   error: null
 };
 
-export const feedThunk = createAsyncThunk(
+// Асинхронный thunk для загрузки ленты заказов
+export const feedThunk = createAsyncThunk<TOrdersData>(
   'feed/fetch',
-  async () => await getFeedsApi()
+  async (_, thunkAPI) => {
+    try {
+      return await getFeedsApi();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
 );
 
+// Слайс
 export const feedSlice = createSlice({
   name: 'feed',
   initialState,
@@ -38,21 +47,26 @@ export const feedSlice = createSlice({
       .addCase(feedThunk.fulfilled, (state, action) => {
         state.items = action.payload;
         state.loading = false;
-        state.error = null;
       })
       .addCase(feedThunk.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        // Используем action.error, если reject без value
+        // Или приводим action.payload к SerializedError, если rejectWithValue
+        state.error =
+          (action.payload as SerializedError) ?? action.error ?? null;
       });
   }
 });
 
+// Селекторы
 export const selectFeed = (state: RootState) => state.feed.items;
 export const selectLoading = (state: RootState) => state.feed.loading;
 export const selectError = (state: RootState) => state.feed.error;
+
+// Селектор заказов (возвращает [] если orders отсутствует)
 export const selectOrders = createSelector(
   [selectFeed],
-  (feed) => feed?.orders || []
+  (feed) => feed?.orders ?? []
 );
 
 export default feedSlice.reducer;

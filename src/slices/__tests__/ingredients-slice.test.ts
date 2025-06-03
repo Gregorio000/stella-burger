@@ -9,17 +9,18 @@ import ingredientsSlice, {
 } from '../ingredients-slice';
 import { getIngredientsApi } from '@api';
 import { TIngredient } from '@utils-types';
+import { initialState } from '../builder-slice';
 
 jest.mock('@api', () => ({
   getIngredientsApi: jest.fn()
 }));
 
-const mockGetIngrApi = getIngredientsApi as jest.MockedFunction<
+const mockedGetIngredientsApi = getIngredientsApi as jest.MockedFunction<
   typeof getIngredientsApi
 >;
 
 describe('Слайс ингредиентов', () => {
-  const mockIngrs: TIngredient[] = [
+  const mockIngredients: TIngredient[] = [
     {
       _id: '1',
       name: 'Булка',
@@ -67,12 +68,7 @@ describe('Слайс ингредиентов', () => {
 
   it('Возвращает начальное состояние', () => {
     expect(ingredientsSlice(undefined, { type: 'unknown' })).toEqual({
-      items: [],
-      buns: [],
-      mains: [],
-      sauces: [],
-      isLoading: true,
-      error: null
+     initialState
     });
   });
 
@@ -81,27 +77,22 @@ describe('Слайс ингредиентов', () => {
       const action = { type: fetchIngredients.pending.type };
       const state = ingredientsSlice(undefined, action);
       expect(state).toEqual({
-        items: [],
-        buns: [],
-        mains: [],
-        sauces: [],
-        isLoading: true,
-        error: null
+       initialState
       });
     });
 
     it('Обрабатывает состояние fulfilled', () => {
       const action = {
         type: fetchIngredients.fulfilled.type,
-        payload: mockIngrs
+        payload: mockIngredients
       };
       const state = ingredientsSlice(undefined, action);
 
       expect(state).toEqual({
-        items: mockIngrs,
-        buns: mockIngrs.filter((item) => item.type === 'bun'),
-        mains: mockIngrs.filter((item) => item.type === 'main'),
-        sauces: mockIngrs.filter((item) => item.type === 'sauce'),
+        items: mockIngredients,
+        buns: mockIngredients.filter((item) => item.type === 'bun'),
+        mains: mockIngredients.filter((item) => item.type === 'main'),
+        sauces: mockIngredients.filter((item) => item.type === 'sauce'),
         isLoading: false,
         error: null
       });
@@ -116,17 +107,12 @@ describe('Слайс ингредиентов', () => {
       const state = ingredientsSlice(undefined, action);
 
       expect(state).toEqual({
-        items: [],
-        buns: [],
-        mains: [],
-        sauces: [],
-        isLoading: false,
-        error
+        initialState
       });
     });
 
     it('Успешно загружает ингредиенты', async () => {
-      mockGetIngrApi.mockResolvedValue(mockIngrs);
+      mockedGetIngredientsApi.mockResolvedValue(mockIngredients);
 
       const store = configureStore({
         reducer: {
@@ -137,15 +123,15 @@ describe('Слайс ингредиентов', () => {
       await store.dispatch(fetchIngredients());
 
       const state = store.getState().ingredients;
-      expect(state.items).toEqual(mockIngrs);
+      expect(state.items).toEqual(mockIngredients);
       expect(state.buns).toEqual(
-        mockIngrs.filter((item) => item.type === 'bun')
+        mockIngredients.filter((item) => item.type === 'bun')
       );
       expect(state.mains).toEqual(
-        mockIngrs.filter((item) => item.type === 'main')
+        mockIngredients.filter((item) => item.type === 'main')
       );
       expect(state.sauces).toEqual(
-        mockIngrs.filter((item) => item.type === 'sauce')
+        mockIngredients.filter((item) => item.type === 'sauce')
       );
       expect(state.isLoading).toBe(false);
       expect(state.error).toBeNull();
@@ -153,7 +139,7 @@ describe('Слайс ингредиентов', () => {
 
     it('Обрабатывает ошибку при загрузке ингредиентов', async () => {
       const errorMessage = 'Network Error';
-      mockGetIngrApi.mockRejectedValue(new Error(errorMessage));
+      mockedGetIngredientsApi.mockRejectedValue(new Error(errorMessage));
 
       const store = configureStore({
         reducer: {
@@ -173,10 +159,10 @@ describe('Слайс ингредиентов', () => {
   describe('Селекторы', () => {
     const mockState = {
       ingredients: {
-        items: mockIngrs,
-        buns: mockIngrs.filter((item) => item.type === 'bun'),
-        mains: mockIngrs.filter((item) => item.type === 'main'),
-        sauces: mockIngrs.filter((item) => item.type === 'sauce'),
+        items: mockIngredients,
+        buns: mockIngredients.filter((item) => item.type === 'bun'),
+        mains: mockIngredients.filter((item) => item.type === 'main'),
+        sauces: mockIngredients.filter((item) => item.type === 'sauce'),
         isLoading: false,
         error: null
       },
@@ -187,24 +173,24 @@ describe('Слайс ингредиентов', () => {
     };
 
     it('Выбирает все ингредиенты', () => {
-      expect(selectIngredients(mockState)).toEqual(mockIngrs);
+      expect(selectIngredients(mockState)).toEqual(mockIngredients);
     });
 
     it('Выбирает булки', () => {
       expect(selectBuns(mockState)).toEqual(
-        mockIngrs.filter((item) => item.type === 'bun')
+        mockIngredients.filter((item) => item.type === 'bun')
       );
     });
 
     it('Выбирает начинки', () => {
       expect(selectMains(mockState)).toEqual(
-        mockIngrs.filter((item) => item.type === 'main')
+        mockIngredients.filter((item) => item.type === 'main')
       );
     });
 
     it('Выбирает соусы', () => {
       expect(selectSauces(mockState)).toEqual(
-        mockIngrs.filter((item) => item.type === 'sauce')
+        mockIngredients.filter((item) => item.type === 'sauce')
       );
     });
 

@@ -15,7 +15,9 @@ jest.mock('@api', () => ({
   getFeedsApi: jest.fn()
 }));
 
-const mockGetFeedsApi = getFeedsApi as jest.MockedFunction<typeof getFeedsApi>;
+const mockedGetFeedsApi = getFeedsApi as jest.MockedFunction<
+  typeof getFeedsApi
+>;
 
 describe('Слайс feed', () => {
   const mockOrder: TOrder = {
@@ -82,7 +84,7 @@ describe('Слайс feed', () => {
     });
 
     it('Успешная загрузка данных о ленте заказов', async () => {
-      mockGetFeedsApi.mockResolvedValue(mockApiResponse);
+      mockedGetFeedsApi.mockResolvedValue(mockApiResponse);
 
       const store = configureStore({
         reducer: {
@@ -100,7 +102,7 @@ describe('Слайс feed', () => {
 
     it('Обрабатывает ошибку при загрузке данных о ленте заказов', async () => {
       const errorMessage = 'Network Error';
-      mockGetFeedsApi.mockRejectedValue(new Error(errorMessage));
+      mockedGetFeedsApi.mockRejectedValue(new Error(errorMessage));
 
       const store = configureStore({
         reducer: {

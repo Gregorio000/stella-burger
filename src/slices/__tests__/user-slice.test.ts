@@ -19,6 +19,7 @@ import {
   updateUserApi
 } from '@api';
 import { TUser } from '@utils-types';
+import { initialState } from '../builder-slice';
 
 // Моки
 jest.mock('@api', () => ({
@@ -34,22 +35,24 @@ jest.mock('../../utils/cookie', () => ({
   deleteCookie: jest.fn()
 }));
 
-const mockRegUserApi = registerUserApi as jest.MockedFunction<
+const mockedRegisterUserApi = registerUserApi as jest.MockedFunction<
   typeof registerUserApi
 >;
-const mockLogUserApi = loginUserApi as jest.MockedFunction<typeof loginUserApi>;
-const mockLogoutApi = logoutApi as jest.MockedFunction<typeof logoutApi>;
-const mockGetUserApi = getUserApi as jest.MockedFunction<typeof getUserApi>;
-const mockUpdUserApi = updateUserApi as jest.MockedFunction<
+const mockedLoginUserApi = loginUserApi as jest.MockedFunction<
+  typeof loginUserApi
+>;
+const mockedLogoutApi = logoutApi as jest.MockedFunction<typeof logoutApi>;
+const mockedGetUserApi = getUserApi as jest.MockedFunction<typeof getUserApi>;
+const mockedUpdateUserApi = updateUserApi as jest.MockedFunction<
   typeof updateUserApi
 >;
-const mockSetCook = jest.requireMock('../../utils/cookie').setCookie;
-const mockDelCook = jest.requireMock('../../utils/cookie').deleteCookie;
+const mockedSetCookie = jest.requireMock('../../utils/cookie').setCookie;
+const mockedDeleteCookie = jest.requireMock('../../utils/cookie').deleteCookie;
 
 describe('Слайс пользователя', () => {
   const mockUser: TUser = {
     name: 'Test User',
-    email: 'test_user_9876543210@test.com'
+    email: 'test_user@example.com'
   };
 
   const mockApiResponse = {
@@ -65,8 +68,7 @@ describe('Слайс пользователя', () => {
 
   it('Возвращение начального состояния', () => {
     expect(userSlice(undefined, { type: 'unknown' })).toEqual({
-      data: null,
-      isAuthenticated: false
+      initialState
     });
   });
 
@@ -104,7 +106,7 @@ describe('Слайс пользователя', () => {
       });
 
       it('Успешная регистрация пользователя', async () => {
-        mockRegUserApi.mockResolvedValue(mockApiResponse);
+        mockedRegisterUserApi.mockResolvedValue(mockApiResponse);
 
         const store = configureStore({
           reducer: {
@@ -115,13 +117,13 @@ describe('Слайс пользователя', () => {
         await store.dispatch(
           registerUser({
             name: 'Test User',
-            email: 'test_user_9876543210@test.com',
-            password: '987654321'
+            email: 'test_user@example.com',
+            password: '12345678'
           })
         );
 
         const state = store.getState().user;
-        expect(mockSetCook).toHaveBeenCalledTimes(2);
+        expect(mockedSetCookie).toHaveBeenCalledTimes(2);
         expect(state.isAuthenticated).toBe(true);
         expect(state.data).toEqual(mockUser);
       });
@@ -160,7 +162,7 @@ describe('Слайс пользователя', () => {
       });
 
       it('Успешное авторизовывание пользователя', async () => {
-        mockLogUserApi.mockResolvedValue(mockApiResponse);
+        mockedLoginUserApi.mockResolvedValue(mockApiResponse);
 
         const store = configureStore({
           reducer: {
@@ -170,13 +172,16 @@ describe('Слайс пользователя', () => {
 
         await store.dispatch(
           loginUser({
-            email: 'test_user_9876543210@test.com',
-            password: '987654321'
+            email: 'test_user@example.com',
+            password: '12345678'
           })
         );
 
         const state = store.getState().user;
-        expect(mockSetCook).toHaveBeenCalledWith('accessToken', 'access-token');
+        expect(mockedSetCookie).toHaveBeenCalledWith(
+          'accessToken',
+          'access-token'
+        );
         expect(state.isAuthenticated).toBe(true);
         expect(state.data).toEqual(mockUser);
       });
@@ -196,7 +201,7 @@ describe('Слайс пользователя', () => {
       });
 
       it('Успешное выполнение выхода пользователя', async () => {
-        mockLogoutApi.mockResolvedValue({ success: true });
+        mockedLogoutApi.mockResolvedValue({ success: true });
 
         const store = configureStore({
           reducer: {
@@ -213,7 +218,7 @@ describe('Слайс пользователя', () => {
         await store.dispatch(logoutUser());
 
         const state = store.getState().user;
-        expect(mockDelCook).toHaveBeenCalledWith('accessToken');
+        expect(mockedDeleteCookie).toHaveBeenCalledWith('accessToken');
         expect(state.isAuthenticated).toBe(false);
         expect(state.data).toBeNull();
       });
@@ -231,7 +236,7 @@ describe('Слайс пользователя', () => {
       });
 
       it('Успешное получение данных пользователя', async () => {
-        mockGetUserApi.mockResolvedValue({
+        mockedGetUserApi.mockResolvedValue({
           success: true,
           user: mockUser
         });
@@ -271,7 +276,7 @@ describe('Слайс пользователя', () => {
           name: 'Test User'
         };
 
-        mockUpdUserApi.mockResolvedValue({
+        mockedUpdateUserApi.mockResolvedValue({
           success: true,
           user: updatedUser
         });
@@ -291,7 +296,7 @@ describe('Слайс пользователя', () => {
         await store.dispatch(
           updateUser({
             name: 'Test User',
-            email: 'test_user_9876543210@test.com'
+            email: 'test_user@example.com'
           })
         );
 

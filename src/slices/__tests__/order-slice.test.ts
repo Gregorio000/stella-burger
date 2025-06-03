@@ -21,13 +21,15 @@ jest.mock('@api', () => ({
   getOrdersApi: jest.fn()
 }));
 
-const mockOrdBurgApi = orderBurgerApi as jest.MockedFunction<
+const mockedOrderBurgerApi = orderBurgerApi as jest.MockedFunction<
   typeof orderBurgerApi
 >;
-const mockGetOrdByNumberApi = getOrderByNumberApi as jest.MockedFunction<
+const mockedGetOrderByNumberApi = getOrderByNumberApi as jest.MockedFunction<
   typeof getOrderByNumberApi
 >;
-const mockGetOrdApi = getOrdersApi as jest.MockedFunction<typeof getOrdersApi>;
+const mockedGetOrdersApi = getOrdersApi as jest.MockedFunction<
+  typeof getOrdersApi
+>;
 
 describe('Слайс заказов', () => {
   const mockOrder: TOrder = {
@@ -59,12 +61,7 @@ describe('Слайс заказов', () => {
 
   it('Возвращение начального состояния', () => {
     expect(orderSlice(undefined, { type: 'unknown' })).toEqual({
-      order: [],
-      orderRequest: false,
-      orderError: null,
-      orderModalData: null,
-      isLoadingNumber: true,
-      isLoadingOrder: true
+    initialState
     });
   });
 
@@ -109,7 +106,7 @@ describe('Слайс заказов', () => {
       });
 
       it('Успешное создание заказа', async () => {
-        mockOrdBurgApi.mockResolvedValue({
+        mockedOrderBurgerApi.mockResolvedValue({
           success: true,
           name: 'Order 1',
           order: mockOrder
@@ -153,7 +150,7 @@ describe('Слайс заказов', () => {
       });
 
       it('Успешное получение заказа по номеру', async () => {
-        mockGetOrdByNumberApi.mockResolvedValue({
+        mockedGetOrderByNumberApi.mockResolvedValue({
           success: true,
           orders: [mockOrder]
         });
@@ -203,7 +200,7 @@ describe('Слайс заказов', () => {
       });
 
       it('Успешно получает список заказов', async () => {
-        mockGetOrdApi.mockResolvedValue(mockOrders);
+        mockedGetOrdersApi.mockResolvedValue(mockOrders);
 
         const store = configureStore({
           reducer: {
