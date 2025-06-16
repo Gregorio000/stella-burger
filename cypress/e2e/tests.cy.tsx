@@ -1,4 +1,3 @@
-// Повторяющиеся селекторы
 const SELECTORS = {
   userApi: '/api/auth/user',
   ingredientsApi: '/api/ingredients',

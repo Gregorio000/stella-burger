@@ -13,6 +13,8 @@ import orderSlice, {
 } from '../order-slice';
 import { orderBurgerApi, getOrderByNumberApi, getOrdersApi } from '@api';
 import { TOrder } from '@utils-types';
+import { describe, it, expect } from '@jest/globals';
+
 
 // Моки для API
 jest.mock('@api', () => ({
@@ -21,15 +23,13 @@ jest.mock('@api', () => ({
   getOrdersApi: jest.fn()
 }));
 
-const mockedOrderBurgerApi = orderBurgerApi as jest.MockedFunction<
+const mockOrdBurgApi = orderBurgerApi as jest.MockedFunction<
   typeof orderBurgerApi
 >;
-const mockedGetOrderByNumberApi = getOrderByNumberApi as jest.MockedFunction<
+const mockGetOrdByNumberApi = getOrderByNumberApi as jest.MockedFunction<
   typeof getOrderByNumberApi
 >;
-const mockedGetOrdersApi = getOrdersApi as jest.MockedFunction<
-  typeof getOrdersApi
->;
+const mockGetOrdApi = getOrdersApi as jest.MockedFunction<typeof getOrdersApi>;
 
 describe('Слайс заказов', () => {
   const mockOrder: TOrder = {
@@ -61,7 +61,12 @@ describe('Слайс заказов', () => {
 
   it('Возвращение начального состояния', () => {
     expect(orderSlice(undefined, { type: 'unknown' })).toEqual({
-    initialState
+      order: [],
+      orderRequest: false,
+      orderError: null,
+      orderModalData: null,
+      isLoadingNumber: true,
+      isLoadingOrder: true
     });
   });
 
@@ -106,7 +111,7 @@ describe('Слайс заказов', () => {
       });
 
       it('Успешное создание заказа', async () => {
-        mockedOrderBurgerApi.mockResolvedValue({
+        mockOrdBurgApi.mockResolvedValue({
           success: true,
           name: 'Order 1',
           order: mockOrder
@@ -150,7 +155,7 @@ describe('Слайс заказов', () => {
       });
 
       it('Успешное получение заказа по номеру', async () => {
-        mockedGetOrderByNumberApi.mockResolvedValue({
+        mockGetOrdByNumberApi.mockResolvedValue({
           success: true,
           orders: [mockOrder]
         });
@@ -200,7 +205,7 @@ describe('Слайс заказов', () => {
       });
 
       it('Успешно получает список заказов', async () => {
-        mockedGetOrdersApi.mockResolvedValue(mockOrders);
+        mockGetOrdApi.mockResolvedValue(mockOrders);
 
         const store = configureStore({
           reducer: {

@@ -14,7 +14,7 @@ module.exports = {
     '\\.(jpg|jpeg|png|svg|woff|woff2)$': '<rootDir>/__mocks__/fileMock.js'
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  testMatch: ['**/__tests__/**/*.test.{ts,tsx}'], // Обновленный паттерн
+  testMatch: ['**/__tests__/**/*.test.{ts,tsx}'],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!src/**/*.test.{ts,tsx}',
@@ -25,7 +25,7 @@ module.exports = {
       'ts-jest',
       {
         tsconfig: 'tsconfig.json',
-        isolatedModules: true // Добавьте эту опцию
+        isolatedModules: true
       }
     ]
   },

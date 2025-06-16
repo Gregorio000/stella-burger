@@ -6,11 +6,11 @@ import builderSlice, {
   clearBuilder,
   selectConstructorItems,
   selectBun,
-  selectConstructorTotalCount,
-  initialState
+  selectConstructorTotalCount
 } from '../builder-slice';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { v4 as uuidv4 } from 'uuid';
+import { describe, it, expect } from '@jest/globals';
 
 describe('builderSlice', () => {
   const mockBun: TIngredient = {
@@ -27,7 +27,7 @@ describe('builderSlice', () => {
     image_large: 'image-large.png'
   };
 
-  const mockIngredient: TConstructorIngredient = {
+  const mockIngr: TConstructorIngredient = {
     _id: 'ing1',
     name: 'Ingredient1',
     type: 'sauce',
@@ -44,14 +44,20 @@ describe('builderSlice', () => {
 
   it('Исходное состояние', () => {
     expect(builderSlice(undefined, { type: '' })).toEqual({
-      constructorItems: {initialState}
+      constructorItems: {
+        bun: null,
+        ingredients: []
+      }
     });
   });
 
   describe('addBunBuilder', () => {
     it('Добавить булочку в конструктор', () => {
       const previousState = {
-        constructorItems: {initialState}
+        constructorItems: {
+          bun: null,
+          ingredients: []
+        }
       };
 
       expect(builderSlice(previousState, addBunBuilder(mockBun))).toEqual({
@@ -93,7 +99,10 @@ describe('builderSlice', () => {
       };
 
       expect(builderSlice(previousState, addBunBuilder(null))).toEqual({
-        constructorItems: {initialState}
+        constructorItems: {
+          bun: null,
+          ingredients: []
+        }
       });
     });
   });
@@ -101,11 +110,14 @@ describe('builderSlice', () => {
   describe('addItemBuilder', () => {
     it('Добавить ингредиент в конструктор', () => {
       const previousState = {
-        constructorItems: {initialState}
+        constructorItems: {
+          bun: null,
+          ingredients: []
+        }
       };
 
       const action = addItemBuilder({
-        ...mockIngredient,
+        ...mockIngr,
         id: undefined as unknown as string
       });
 
@@ -118,7 +130,10 @@ describe('builderSlice', () => {
 
     it('Добавить булочку с помощью addItemBuilder', () => {
       const previousState = {
-        constructorItems: {initialState}
+        constructorItems: {
+          bun: null,
+          ingredients: []
+        }
       };
 
       const action = addItemBuilder({
@@ -143,12 +158,12 @@ describe('builderSlice', () => {
   describe('deleteItemBuilder', () => {
     it('Удалить ингредиент из конструктора', () => {
       const ingredientToDelete = {
-        ...mockIngredient,
+        ...mockIngr,
         id: 'to-delete'
       };
 
       const ingredientToKeep = {
-        ...mockIngredient,
+        ...mockIngr,
         id: 'to-keep',
         _id: 'ing2'
       };
@@ -192,19 +207,19 @@ describe('builderSlice', () => {
 
   describe('moveItems', () => {
     const ingredient1 = {
-      ...mockIngredient,
+      ...mockIngr,
       id: '1',
       _id: 'ing1'
     };
 
     const ingredient2 = {
-      ...mockIngredient,
+      ...mockIngr,
       id: '2',
       _id: 'ing2'
     };
 
     const ingredient3 = {
-      ...mockIngredient,
+      ...mockIngr,
       id: '3',
       _id: 'ing3'
     };
@@ -303,14 +318,16 @@ describe('builderSlice', () => {
       const previousState = {
         constructorItems: {
           bun: mockBun,
-          ingredients: [mockIngredient, mockIngredient]
+          ingredients: [mockIngr, mockIngr]
         }
       };
 
       const result = builderSlice(previousState, clearBuilder());
 
       expect(result).toEqual({
-        constructorItems: {initialState
+        constructorItems: {
+          bun: null,
+          ingredients: []
         }
       });
     });
@@ -321,7 +338,7 @@ describe('builderSlice', () => {
       builder: {
         constructorItems: {
           bun: mockBun,
-          ingredients: [mockIngredient, mockIngredient]
+          ingredients: [mockIngr, mockIngr]
         }
       }
     };
@@ -330,7 +347,7 @@ describe('builderSlice', () => {
       // @ts-ignore
       expect(selectConstructorItems(state)).toEqual({
         bun: mockBun,
-        ingredients: [mockIngredient, mockIngredient]
+        ingredients: [mockIngr, mockIngr]
       }));
 
     it('selectBun должен вернуть булочку', () =>

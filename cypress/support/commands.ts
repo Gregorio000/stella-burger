@@ -1,7 +1,11 @@
-Cypress.Commands.add('loginByApi', () => {
+const cypressCommands = (Cypress as unknown) as {
+  Commands: typeof Cypress.Commands;
+  on: typeof Cypress.on;
+};
+
+cypressCommands.Commands.add('loginByApi', () => {
   cy.request('POST', 'https://norma.nomoreparties.space/api/auth/login', {
     email: 'test_user@example.com',
-
     password: '12345678'
   }).then((res) => {
     const accessToken = res.body.accessToken.split('Bearer ')[1];
@@ -12,7 +16,6 @@ Cypress.Commands.add('loginByApi', () => {
       win.localStorage.setItem('refreshToken', refreshToken);
     });
 
-    // Мокаем ответ /auth/user перед переходом на страницу профиля
     cy.intercept('GET', '**/api/auth/user', {
       statusCode: 200,
       body: {
@@ -26,6 +29,6 @@ Cypress.Commands.add('loginByApi', () => {
   });
 });
 
-Cypress.on('window:before:load', (win) => {
+cypressCommands.on('window:before:load', (win: Window) => {
   cy.spy(win, 'fetch').as('fetchSpy');
 });

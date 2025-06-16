@@ -9,15 +9,15 @@ import feedSlice, {
 } from '../feed-slice';
 import { TOrdersData, TOrder } from '@utils-types';
 import { getFeedsApi } from '@api';
+import { describe, it, expect } from '@jest/globals';
+
 
 // Мок для API
 jest.mock('@api', () => ({
   getFeedsApi: jest.fn()
 }));
 
-const mockedGetFeedsApi = getFeedsApi as jest.MockedFunction<
-  typeof getFeedsApi
->;
+const mockGetFeedsApi = getFeedsApi as jest.MockedFunction<typeof getFeedsApi>;
 
 describe('Слайс feed', () => {
   const mockOrder: TOrder = {
@@ -84,7 +84,7 @@ describe('Слайс feed', () => {
     });
 
     it('Успешная загрузка данных о ленте заказов', async () => {
-      mockedGetFeedsApi.mockResolvedValue(mockApiResponse);
+      mockGetFeedsApi.mockResolvedValue(mockApiResponse);
 
       const store = configureStore({
         reducer: {
@@ -102,7 +102,7 @@ describe('Слайс feed', () => {
 
     it('Обрабатывает ошибку при загрузке данных о ленте заказов', async () => {
       const errorMessage = 'Network Error';
-      mockedGetFeedsApi.mockRejectedValue(new Error(errorMessage));
+      mockGetFeedsApi.mockRejectedValue(new Error(errorMessage));
 
       const store = configureStore({
         reducer: {
