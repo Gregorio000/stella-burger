@@ -1,1 +1,1 @@
-export { OrderCardUI } from './order-card';
+export { OrdersCardUI } from './order-card';

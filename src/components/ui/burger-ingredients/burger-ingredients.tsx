@@ -2,10 +2,10 @@ import React, { FC, memo } from 'react';
 import { Tab } from '@zlden/react-developer-burger-ui-components';
 
 import styles from './burger-ingredients.module.css';
-import { BurgerIngredientsUIProps } from './type';
-import { IngredientsCategory } from '@components';
+import { BurgerIngUIProps } from './type';
+import { IngrCateg } from '@components';
 
-export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
+export const BurgerIngUI: FC<BurgerIngUIProps> = memo(
   ({
     currentTab,
     buns,
@@ -43,19 +43,19 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
           </ul>
         </nav>
         <div className={styles.content}>
-          <IngredientsCategory
+          <IngrCateg
             title='Булки'
             titleRef={titleBunRef}
             ingredients={buns}
             ref={bunsRef}
           />
-          <IngredientsCategory
+          <IngrCateg
             title='Начинки'
             titleRef={titleMainRef}
             ingredients={mains}
             ref={mainsRef}
           />
-          <IngredientsCategory
+          <IngrCateg
             title='Соусы'
             titleRef={titleSaucesRef}
             ingredients={sauces}

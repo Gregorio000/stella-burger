@@ -1,1 +1,1 @@
-export { BurgerIngredientUI } from './burger-ingredient';
+export { BurgerIngrUI } from './burger-ingredient';

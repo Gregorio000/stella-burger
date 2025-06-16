@@ -1,6 +1,6 @@
 import { TIngredient } from '@utils-types';
 
-export type TIngredientsCategoryUIProps = {
+export type TIngrCategUIProps = {
   title: string;
   titleRef: React.RefObject<HTMLHeadingElement>;
   ingredients: TIngredient[];

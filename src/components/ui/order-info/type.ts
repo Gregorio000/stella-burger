@@ -1,10 +1,10 @@
 import { TIngredient } from '@utils-types';
 
-export type OrderInfoUIProps = {
-  orderInfo: TOrderInfo;
+export type OrdersInfoUIProps = {
+  OrdersInfo: TOrdersInfo;
 };
 
-type TOrderInfo = {
+type TOrdersInfo = {
   ingredientsInfo: {
     [key: string]: TIngredient & { count: number };
   };

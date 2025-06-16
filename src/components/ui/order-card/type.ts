@@ -1,13 +1,13 @@
 import { Location } from 'react-router-dom';
 import { TIngredient } from '@utils-types';
 
-export type OrderCardUIProps = {
-  orderInfo: TOrderInfo;
+export type OrdersCardUIProps = {
+  OrdersInfo: TOrdersInfo;
   maxIngredients: number;
   locationState: { background: Location };
 };
 
-type TOrderInfo = {
+type TOrdersInfo = {
   ingredientsInfo: TIngredient[];
   ingredientsToShow: TIngredient[];
   remains: number;

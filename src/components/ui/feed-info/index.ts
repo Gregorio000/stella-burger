@@ -1,1 +1,1 @@
-export { FeedInfoUI } from './feed-info';
+export { FeedInformationsUI } from './feed-info';

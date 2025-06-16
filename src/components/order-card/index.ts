@@ -1,1 +1,1 @@
-export { OrderCard } from './order-card';
+export { OrdersCard } from './order-card';
